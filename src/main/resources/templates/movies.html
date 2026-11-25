@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Now showing · CineSeat</title><link rel="stylesheet" href="/style.css"></head><body><header><b class="brand">CineSeat<span>●</span></b><nav><a href="/">Movies</a><a href="/bookings">My tickets</a><form th:action="@{/logout}" method="post"><button class="link">Sign out</button></form></nav></header>
+<main><h1>Now showing</h1><p role="alert" th:if="${error}" th:text="${error}"></p>
+<div class="cards">
+<article class="card film" th:each="movie : ${movies}">
+<small th:text="${movie.language}">
+</small>
+<h2 th:text="${movie.title}">
+</h2>
+<p th:text="${movie.genre}">
+</p>
+<a class="button" th:href="@{/movies/{id}(id=${movie.id})}">View showtimes →</a>
+</article>
+</div>
+</main></body></html>

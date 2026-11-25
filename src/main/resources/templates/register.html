@@ -1,0 +1,13 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Create an account · CineSeat</title><link rel="stylesheet" href="/style.css"></head><body><header><b class="brand">CineSeat<span>●</span></b></header>
+<main><h1>Create an account</h1><p role="alert" th:if="${error}" th:text="${error}"></p>
+<form class="card auth" method="post" th:action="@{/register}">
+<label>Email<input type="email" name="email" autocomplete="email" maxlength="254" required>
+</label>
+<label>Password<input type="password" name="password" autocomplete="new-password" minlength="8" required>
+</label>
+<small>Use at least 8 characters.</small>
+<button>Create account</button>
+<a href="/login">Back to sign in</a>
+</form>
+</main></body></html>

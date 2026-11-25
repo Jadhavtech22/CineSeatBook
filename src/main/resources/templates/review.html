@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Review booking · CineSeat</title><link rel="stylesheet" href="/style.css"></head><body><header><b class="brand">CineSeat<span>●</span></b><nav><a href="/">Movies</a><a href="/bookings">My tickets</a><form th:action="@{/logout}" method="post"><button class="link">Sign out</button></form></nav></header>
+<main><h1>Review booking</h1><p role="alert" th:if="${error}" th:text="${error}"></p>
+<section class="card">
+<small>Demo checkout</small>
+<h2 th:text="${show.title}">
+</h2>
+<p th:text="|${show.auditorium} · ${show.showtime} IST|">
+</p>
+<p th:text="|Seats · ${#strings.listJoin(selected, ', ')}|">
+</p>
+<h3 th:text="|Total ₹${total}|">
+</h3>
+<p>Demo payment uses no real money. Seats are confirmed when payment completes.</p>
+<form method="post" th:action="@{/shows/{id}/pay(id=${show.id})}">
+<input type="hidden" name="reference" th:value="${reference}">
+<input th:each="s : ${selected}" type="hidden" name="seat" th:value="${s}">
+<button th:text="|Pay ₹${total} in demo|">
+</button>
+</form>
+<p>
+<a th:href="@{/shows/{id}(id=${show.id})}">Change seats</a>
+</p>
+</section>
+</main></body></html>

@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Choose a show · CineSeat</title><link rel="stylesheet" href="/style.css"></head><body><header><b class="brand">CineSeat<span>●</span></b><nav><a href="/">Movies</a><a href="/bookings">My tickets</a><form th:action="@{/logout}" method="post"><button class="link">Sign out</button></form></nav></header>
+<main><h1>Choose a show</h1><p role="alert" th:if="${error}" th:text="${error}"></p>
+<p th:if="${shows.isEmpty()}">There are no upcoming shows. <a href="/">Browse movies</a>
+</p>
+<section th:unless="${shows.isEmpty()}">
+<h2 th:text="${shows[0].title}">
+</h2>
+<p>All showtimes are in Indian Standard Time.</p>
+<div class="cards">
+<article class="card" th:each="s : ${shows}">
+<small th:text="${s.auditorium}">
+</small>
+<h3 th:text="${s.showtime}">
+</h3>
+<p th:text="|₹${s.price} per seat|">
+</p>
+<a class="button" th:href="@{/shows/{id}(id=${s.id})}">Choose seats</a>
+</article>
+</div>
+</section>
+</main></body></html>

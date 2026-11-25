@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Welcome back · CineSeat</title><link rel="stylesheet" href="/style.css"></head><body><header><b class="brand">CineSeat<span>●</span></b></header>
+<main><h1>Welcome back</h1><p role="alert" th:if="${error}" th:text="${error}"></p>
+<p class="notice" th:if="${param.created}">Account created. Sign in to book your seats.</p>
+<p class="notice" th:if="${param.logout}">You have signed out.</p>
+<p role="alert" th:if="${param.error}">Check your email and password.</p>
+<form class="card auth" method="post" th:action="@{/login}">
+<label>Email<input type="email" name="username" autocomplete="username" required>
+</label>
+<label>Password<input type="password" name="password" autocomplete="current-password" required>
+</label>
+<button>Sign in</button>
+<a href="/register">Create an account</a>
+</form>
+</main></body></html>

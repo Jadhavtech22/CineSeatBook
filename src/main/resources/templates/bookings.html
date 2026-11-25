@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>My tickets · CineSeat</title><link rel="stylesheet" href="/style.css"></head><body><header><b class="brand">CineSeat<span>●</span></b><nav><a href="/">Movies</a><a href="/bookings">My tickets</a><form th:action="@{/logout}" method="post"><button class="link">Sign out</button></form></nav></header>
+<main><h1>My tickets</h1><p role="alert" th:if="${error}" th:text="${error}"></p>
+<p class="notice" th:if="${message}" th:text="${message}">
+</p>
+<p th:if="${bookings.isEmpty()}">Your tickets will appear here after checkout. <a href="/">Browse movies</a>
+</p>
+<div class="cards">
+<article class="card ticket" th:each="b : ${bookings}">
+<small>Confirmed · Demo payment</small>
+<h2 th:text="${b.title}">
+</h2>
+<p th:text="|${b.auditorium} · ${b.showtime} IST|">
+</p>
+<strong th:text="|Seats · ${b.seats}|">
+</strong>
+<p th:text="|Paid ₹${b.total}|">
+</p>
+<small th:text="|Booking ID · ${b.id}|">
+</small>
+</article>
+</div>
+</main></body></html>

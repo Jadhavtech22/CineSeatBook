@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Choose your seats · CineSeat</title><link rel="stylesheet" href="/style.css"></head><body><header><b class="brand">CineSeat<span>●</span></b><nav><a href="/">Movies</a><a href="/bookings">My tickets</a><form th:action="@{/logout}" method="post"><button class="link">Sign out</button></form></nav></header>
+<main><h1>Choose your seats</h1><p role="alert" th:if="${error}" th:text="${error}"></p>
+<h2 th:text="${show.title}">
+</h2>
+<p th:text="|${show.auditorium} · ${show.showtime} IST · ₹${show.price} per seat|">
+</p>
+<form class="theatre" method="post" th:action="@{/shows/{id}/review(id=${show.id})}">
+<div class="screen">SCREEN</div>
+<div class="seatrow" th:each="r : ${rows}">
+<label class="seat" th:each="n : ${#numbers.sequence(1,8)}" th:with="code=|${r}${n}|">
+<input type="checkbox" name="seat" th:value="${code}" th:disabled="${taken.contains(code)}">
+<span th:text="${code}">
+</span>
+</label>
+</div>
+<p class="legend">
+<i>
+</i> Available <i class="sel">
+</i> Selected <i class="sold">
+</i> Booked</p>
+<p id="amount" aria-live="polite">Select up to 8 seats.</p>
+<button id="review">Review booking</button>
+</form>
+<script src="/seats.js" defer th:attr="data-price=${show.price}">
+</script>
+</main></body></html>
