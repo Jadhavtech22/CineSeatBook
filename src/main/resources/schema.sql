@@ -17,3 +17,20 @@ CREATE TABLE IF NOT EXISTS tickets (
  booking_id uuid NOT NULL, screening_id bigint NOT NULL, seat text NOT NULL CHECK(seat ~ '^[A-F][1-8]$'),
  PRIMARY KEY(screening_id,seat), FOREIGN KEY(booking_id,screening_id) REFERENCES bookings(id,screening_id)
 );
+ALTER TABLE members ADD COLUMN IF NOT EXISTS full_name text;
+ALTER TABLE members ADD COLUMN IF NOT EXISTS mobile text;
+ALTER TABLE members ADD COLUMN IF NOT EXISTS city text;
+ALTER TABLE members ADD COLUMN IF NOT EXISTS email_verified_at timestamptz;
+ALTER TABLE members ADD COLUMN IF NOT EXISTS mobile_verified_at timestamptz;
+
+CREATE UNIQUE INDEX IF NOT EXISTS members_mobile_unique
+    ON members(mobile);
+
+CREATE TABLE IF NOT EXISTS registration_limits (
+    target text PRIMARY KEY,
+    window_start timestamptz NOT NULL,
+    sends integer NOT NULL
+);
+
+CREATE INDEX IF NOT EXISTS registration_limits_start
+    ON registration_limits(window_start);

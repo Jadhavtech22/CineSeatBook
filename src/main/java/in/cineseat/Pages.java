@@ -2,9 +2,7 @@ package in.cineseat;
 
 import java.security.Principal;
 import java.util.*;
-import java.nio.charset.StandardCharsets;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -14,25 +12,17 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 class Pages {
     private final Cinema cinema;
     private final JdbcTemplate db;
-    private final BCryptPasswordEncoder encoder;
-    Pages(Cinema cinema, JdbcTemplate db, BCryptPasswordEncoder encoder) {
-        this.cinema=cinema;
-        this.db=db;
-        this.encoder=encoder;
+
+    Pages(Cinema cinema, JdbcTemplate db) {
+        this.cinema = cinema;
+        this.db = db;
     }
-    @GetMapping("/login") String login(){ return "login"; }
-    @GetMapping("/register") String register(){ return "register"; }
-    @PostMapping("/register") String signup(@RequestParam String email,@RequestParam String password,Model model){
-        email=email.trim().toLowerCase(Locale.ROOT);
-        if(email.length()>254 || !email.matches("[^\\s@]+@[^\\s@]+\\.[^\\s@]+") ||
-           password.length()<8 || password.getBytes(StandardCharsets.UTF_8).length>72) {
-            model.addAttribute("error","Enter a valid email and a password of at least 8 characters (maximum 72 bytes).");
-            return "register";
-        }
-        int added=db.update("insert into members values(?,?) on conflict do nothing",email,encoder.encode(password));
-        if(added==0){ model.addAttribute("error","This email is already registered."); return "register"; }
-        return "redirect:/login?created";
+
+    @GetMapping("/login")
+    String login() {
+        return "login";
     }
+
     @GetMapping("/") String movies(Model model){
         model.addAttribute("movies",db.queryForList("select * from movies order by id"));
         return "movies";
